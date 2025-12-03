@@ -1,0 +1,33 @@
+{
+  "chart": {
+    "title": "Share of people who say they are satisfied with their life",
+    "subtitle": "Share of people answering \"very satisfied\" or \"fairly satisfied\" to the question \"On the whole, are you very satisfied, fairly satisfied, not very satisfied, or not at all satisfied with the life you lead?\"",
+    "citation": "Eurobarometer (2017)",
+    "originalChartUrl": "https://ourworldindata.org/grapher/share-of-people-who-say-they-are-happy-eurobarometer?v=1&csvType=full&useColumnShortNames=false",
+    "selection": [
+      "France",
+      "Germany",
+      "Spain",
+      "Sweden",
+      "Finland",
+      "Ireland",
+      "United Kingdom"
+    ]
+  },
+  "columns": {
+    "Share of people who are happy (Eurobarometer 2017)": {
+      "titleShort": "Share of people who are happy (Eurobarometer 2017)",
+      "titleLong": "Share of people who are happy (Eurobarometer 2017)",
+      "shortUnit": "%",
+      "unit": "%",
+      "timespan": "1973-2016",
+      "type": "Numeric",
+      "owidVariableId": 1767,
+      "citationShort": " – processed by Our World in Data",
+      "citationLong": " – processed by Our World in Data. “Share of people who are happy (Eurobarometer 2017)” [dataset]. Eurobarometer (2017) [original data].",
+      "fullMetadata": "https://api.ourworldindata.org/v1/indicators/1767.metadata.json"
+    }
+  },
+  "dateDownloaded": "2025-11-26",
+  "activeFilters": {}
+}
