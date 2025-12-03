@@ -29,8 +29,10 @@ knitr::opts_chunk$set(
   warning = FALSE
 )
 
+library(gganimate)
 library(tidyverse) 
 happy_raw <- read_csv("data/share-of-people-who-say-they-are-happy-eurobarometer.csv")
+
 
 names(happy_raw)
 head(happy_raw)
@@ -112,54 +114,48 @@ I also added a LOESS smooth line (the dashed black line) to show the general tre
 Overall, this plot helps answer the first research question by showing that happiness changes over time in different ways for different countries, but the general pattern across Europe is quite steady.
 
 ```{r Plot1-trend}
-# Select a set of focus countries
-countries_focus <- c(
-  "Sweden", "Finland", "Ireland", "United Kingdom", "Germany", "France", "Spain"
-)
-
-# Filter the dataset to include only these countries
-happy_focus <- happy_clean %>%
-  filter(Entity %in% countries_focus)
-
-#Plot line chart of happiness over time
-ggplot (happy_focus, aes(x = Year, y = share_happy, color = Entity)) + 
-  geom_line(linewidth = 1, alpha = 0.7) + 
-  geom_point(size = 0.3, alpha = 0.7) + 
-  
-  #This shows the combined smoothed trend across all countries.
-   geom_smooth(aes(group = 1),
-              method = "loess",
-              se = FALSE,
-              linewidth = 1.2,
-              color = "black",
-              linetype = "dashed") +
-  
+# Animated version of Plot 1: reveal trends over time
+happy_trend_anim <- ggplot(
+  happy_focus,
+  aes(x = Year, y = share_happy, colour = Entity, group = Entity)
+) +
+  geom_line(linewidth = 1, alpha = 0.7) +
+  geom_point(size = 0.8, alpha = 0.7) +
   scale_color_manual(values = c(
-    "Sweden" = "#4A90E2", 
-    "Finland" = "#FF8DAA", 
+    "Sweden" = "#4A90E2",
+    "Finland" = "#FF8DAA",
     "Ireland" = "#50C878",
-    "United Kingdom" = "#BD10E0", 
+    "United Kingdom" = "#BD10E0",
     "Germany" = "#F5A623",
     "France" = "#4ECDC4",
     "Spain" = "#C44D58"
-  )) + 
-  
-  #Improve readability of the x-axis scale
-  scale_x_continuous(breaks = seq(1970, 2015, 10)) + 
-  
+  )) +
+  scale_x_continuous(breaks = seq(1970, 2015, 10)) +
   labs(
-    title = "Life satisfaction trends in selected European countries (1973–2016)", 
-    x = "Year", 
-    y = "Share of people who are happy (%)", 
-    color = "Country"
-  ) + 
-    
-  theme_minimal(base_size = 13) + 
-    theme(
-      plot.title = element_text(face = "bold", size = 13), 
-      axis.text = element_text(color = "black"), 
-      legend.position = "right"
-    )
+    title = "Life satisfaction trends in selected European countries (1973–2016)",
+    subtitle = "Animated: lines are drawn gradually over time",
+    x = "Year",
+    y = "Share of people who are happy (%)",
+    colour = "Country"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold", size = 16),
+    axis.text  = element_text(face = "bold", size = 12),
+    legend.position = "right"
+  ) +
+  # This makes the lines appear over time
+  transition_reveal(Year)
+
+# Render animation in the HTML document
+animate(
+  happy_trend_anim,
+  nframes = 120,
+  fps = 15,
+  width = 800,
+  height = 500,
+  renderer = gifski_renderer()
+)
 ```
 
 # Plot 2: Average happiness across countries
